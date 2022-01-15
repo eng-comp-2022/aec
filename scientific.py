@@ -1,7 +1,7 @@
 import math
 from datetime import timedelta
 
-light_speed = 299792458  # m/s
+light_speed = 0.299792458  # m/s
 
 seconds_in_day = 86400
 
