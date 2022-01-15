@@ -1,15 +1,23 @@
 import math
 from datetime import timedelta
 
+# scientific constants
+
 light_speed = 299792458  # m/s
 
 seconds_in_day = 86400
 
 
-def kin_duration(displacement, velocity):
+def travel_duration(displacement: float, velocity: float) -> float:
+    """
+    Calculates the duration required to travel the given displacment at the
+    specified velocity.
+    """
     return displacement / velocity
 
 
-# angular velocity in rads/second
-def angular_velocity(period: timedelta):
+def angular_velocity(period: timedelta) -> float:
+    """
+    Computes angular velocity for the provided period in rads/second
+    """
     return 2 * math.pi / period.total_seconds()

@@ -4,17 +4,17 @@ from scientific import seconds_in_day, angular_velocity
 
 # Class Planet
 """
-All angle calculations were done with repect to earth becuase that was given
-as a reference point for the periods given.
+All angle calculations were done with respect to earth because that was given
+as the reference point for the orbital periods.
 """
 
 
 class Planet:
     def __init__(
         self,
-        name,
-        radius_sun,
-        orbital_period: timedelta = timedelta(),  # orbital adius is taken as a timedelta type
+        name: str,
+        radius_sun: float,
+        orbital_period: timedelta = timedelta(),
         last_op_earth: datetime = datetime.now(timezone.utc),
     ):
         self.name = name
@@ -22,22 +22,25 @@ class Planet:
         self.orbital_period = orbital_period
         self.last_op_earth = last_op_earth
 
-    def location_angle_earth(self, calculation_time: datetime):
+    def location_angle_earth(self, calculation_time: datetime) -> float:
         """
         returns angle in radians of planet with respect to "earth"
         param:
             total_orbiting_duration: total time it has been in orbit
         """
-        # modular math to get position of the current period
         total_orbiting_duration = calculation_time - self.last_op_earth
         total_duration_days = total_orbiting_duration.total_seconds() / seconds_in_day
         orbital_period_days = self.orbital_period.total_seconds() / seconds_in_day
+
+        # modular math to get position of planet in the current period
         current_orbit_duration = total_duration_days % orbital_period_days
         percent_complete = current_orbit_duration / orbital_period_days
         return 2 * math.pi * percent_complete
 
     # returns a datetime of the next opposition between the two planets
-    def next_opposition_date(self, other, calculation_time=datetime.now(timezone.utc)):
+    def next_opposition_date(
+        self, other: "Planet", calculation_time=datetime.now(timezone.utc)
+    ) -> datetime:
         planet1_w = angular_velocity(self.orbital_period)
         planet2_w = angular_velocity(other.orbital_period)
         orbit_w = abs(planet1_w - planet2_w)
@@ -67,7 +70,7 @@ class Planet:
         return calculation_time + travel_duration
 
     # provide angle diff in radians
-    def distance(self, other, planet_angle_diff):
+    def distance(self, other: "Planet", planet_angle_diff: float) -> float:
         # cosine law
         return math.sqrt(
             other.radius_sun ** 2
@@ -75,7 +78,7 @@ class Planet:
             - 2 * self.radius_sun * other.radius_sun * math.cos(planet_angle_diff)
         )
 
-    def abs_angle_diff(self, other, calculation_time: datetime):
+    def abs_angle_diff(self, other: "Planet", calculation_time: datetime) -> float:
         planet1_angle = self.location_angle_earth(calculation_time)
         planet2_angle = other.location_angle_earth(calculation_time)
         angle_diff = math.fabs(planet1_angle - planet2_angle)
