@@ -18,6 +18,7 @@ class Planet:
 
     # returns angle in radians of planet with respect to earth
     def location_angle_earth(self, total_orbiting_duration: timedelta):
+        """ballsack"""
         current_orbit_duration = total_orbiting_duration % self.orbital_period
         percent_complete = current_orbit_duration / self.orbital_period
         return 2 * math.pi * percent_complete
@@ -27,13 +28,14 @@ class Planet:
         planet2_w = angular_velocity(other)
         orbit_w = abs(planet1_w - planet2_w)
 
-        # faster planet moves at relative angular velocity wrt base planet
+        # faster planet orbits at relative angular velocity wrt base planet
         base_planet = self
         orbiting_planet = other
         if planet1_w < planet2_w:
             base_planet = other
             orbiting_planet = self
 
+        # current angle of each planet
         orbit_planet_angle = orbiting_planet.location_angle_earth(
             calculation_time - orbiting_planet.last_op_earth
         )
