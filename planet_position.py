@@ -1,4 +1,3 @@
-import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import numpy as np
@@ -12,7 +11,7 @@ def planet_positions(planet1, planet2, date):
     [Accessed: 15-Jan-2022].
     """
 
-    plt.style.use('dark_background')
+    plt.style.use("dark_background")
 
     rad_angle1 = planet1.location_angle_earth(date)
     rad_angle2 = planet2.location_angle_earth(date)
@@ -40,6 +39,7 @@ def planet_positions(planet1, planet2, date):
 
     fig, ax = plt.subplots(figsize=(5, 5))
     ax = plt.axes(xlim=(-8, 8), ylim=(-8, 8))
+
     p1, = ax.plot([], [], 'r.', markersize=15)
     p2, = ax.plot([], [], 'g.', markersize=15)
     ax.plot(0, 0, 'X', markersize=5, color="yellow")

@@ -72,9 +72,9 @@ class Planet:
         # add remaining duration to current time
         return calculation_time + travel_duration
 
-    def displacement(self, other: "Planet", planet_angle_diff: float) -> float:
+    def distance(self, other: "Planet", planet_angle_diff: float) -> float:
         """
-        Computes the displacement between the self planet and the other given
+        Computes the distance between the self planet and the other given
         planet, when there is an angle of planet_angle_diff between them.
 
         :param float planet_angle_diff: the angle between the two planets, in radians

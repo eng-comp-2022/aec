@@ -11,12 +11,12 @@ def duration_in_days(duration: timedelta) -> float:
     return duration.total_seconds() / seconds_in_day
 
 
-def travel_duration(displacement: float, velocity: float) -> float:
+def travel_duration(distance: float, velocity: float) -> float:
     """
-    Calculates the duration required to travel the given displacment at the
+    Calculates the distance required to travel the given distance at the
     specified velocity.
     """
-    return displacement / velocity
+    return distance / velocity
 
 
 def angular_velocity(period: timedelta) -> float:
