@@ -7,6 +7,9 @@ light_speed = 299792458  # m/s
 
 seconds_in_day = 86400
 
+def duration_in_days(duration: timedelta) -> float:
+    return duration.total_seconds() / seconds_in_day
+
 
 def travel_duration(displacement: float, velocity: float) -> float:
     """
@@ -18,6 +21,6 @@ def travel_duration(displacement: float, velocity: float) -> float:
 
 def angular_velocity(period: timedelta) -> float:
     """
-    Computes angular velocity for the provided period in rads/second
+    Computes angular velocity for the provided period in rads/day
     """
-    return 2 * math.pi / period.total_seconds()
+    return 2 * math.pi / duration_in_days(period)
