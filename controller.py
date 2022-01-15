@@ -11,8 +11,10 @@ from gui import create_main_layout, create_result_layout
 from calculator import calculate
 from plot import Plot
 
-
 def open_result_page(dist_between, morat, next_opp, date, planet1, planet2):
+    """
+    Create line plot for latency between the two planets.
+    """
     example_plot = Plot(size=550)
 
     seconds = []

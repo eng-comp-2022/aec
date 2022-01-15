@@ -17,7 +17,7 @@ def planet_positions(planet1, planet2, date):
     rad_angle2 = planet2.location_angle_earth(date)
 
     n_points = 100
-    if planet1.orbital_period > planet2.orbital_period:
+    if planet1.orbital_period < planet2.orbital_period:
         theta = np.linspace(rad_angle1, 2 * np.pi * (planet1.orbital_period/planet2.orbital_period)  + rad_angle1, n_points)
         theta_2 = np.linspace(rad_angle2, 2 * np.pi + rad_angle2, n_points)
     else:
