@@ -10,7 +10,7 @@ from gui import create_main_layout, create_result_layout
 from calculator import calculate
 from plot import Plot
 
-def open_result_page(dist_between,morat,next_opp,lat_list,date):    
+def open_result_page(dist_between,morat,next_opp,date):    
     example_plot = Plot(size=700)
     
     N = 1000
@@ -19,7 +19,7 @@ def open_result_page(dist_between,morat,next_opp,lat_list,date):
 
     example_plot.figure = go.Figure(data=go.Scatter(x=t, y=y, mode='markers'))
 
-    result_window = sg.Window("Result Page", create_result_layout(example_plot.get_image(),dist_between,morat,next_opp,lat_list,date))
+    result_window = sg.Window("Result Page", create_result_layout(example_plot.get_image(),dist_between,morat,next_opp,date))
 
     while True:  # Event Loop
         event, values = result_window.read(timeout=100)  # milliseconds
@@ -57,8 +57,8 @@ def main():
             try:
                 date = datetime.datetime(int(values["-TIME_YEAR-"]), int(values["-TIME_MONTH-"]), int(values["-TIME_DAY-"])) # validate time
                 if (values["-PLANET_1-"] != values["-PLANET_2-"]):
-                    dist_between,morat,next_opp,lat_list = calculate(planets[values["-PLANET_1-"]], planets[values["-PLANET_2-"]])
-                    open_result_page(dist_between,morat,next_opp,lat_list,date)
+                    dist_between,morat,next_opp = calculate(planets[values["-PLANET_1-"]], planets[values["-PLANET_2-"]], date)
+                    open_result_page(dist_between,morat,next_opp,date)
                 else:
                     sg.popup_error(f'Please choose two distinct planets.')
             except Exception as e:
