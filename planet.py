@@ -52,9 +52,9 @@ class Planet:
 
         # choose faster planet to orbit at relative angular velocity w.r.t. base planet
         if planet1_w < planet2_w:
-            base_planet, orbiting_planet, orbit_w = planet2, planet1, planet1_w
+            base_planet, orbiting_planet, orbit_w = planet1, planet2, planet1_w
         else:
-            base_planet, orbiting_planet, orbit_w = planet1, planet2, planet2_w
+            base_planet, orbiting_planet, orbit_w = planet2, planet1, planet2_w
 
         # current angle of each planet
         orbit_planet_angle = orbiting_planet.location_angle_earth(calculation_time)
