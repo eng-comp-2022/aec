@@ -1,134 +1,40 @@
 import plotly.graph_objects as go
-
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+import numpy as np
 import pandas as pd
 
 def planet_positions():
-    url = "https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv"
-    dataset = pd.read_csv(url)
+    # from matplotlib.animation import PillowWriter
 
-    years = ["1952", "1962", "1967", "1972", "1977", "1982", "1987", "1992", "1997", "2002",
-            "2007"]
+    plt.style.use('dark_background')
 
-    # make list of continents
-    continents = []
-    for continent in dataset["continent"]:
-        if continent not in continents:
-            continents.append(continent)
-    # make figure
-    fig_dict = {
-        "data": [],
-        "layout": {},
-        "frames": []
-    }
+    n_points = 100
+    theta = np.linspace(0, 2 * np.pi, n_points)
+    theta_2 = np.linspace(0, 4 * np.pi, n_points)
+    e_radius = 5
+    m_radius = 7
 
-    # fill in most of layout
-    fig_dict["layout"]["xaxis"] = {"range": [30, 85], "title": "Life Expectancy"}
-    fig_dict["layout"]["yaxis"] = {"title": "GDP per Capita", "type": "log"}
-    fig_dict["layout"]["hovermode"] = "closest"
-    fig_dict["layout"]["updatemenus"] = [
-        {
-            "buttons": [
-                {
-                    "args": [None, {"frame": {"duration": 500, "redraw": False},
-                                    "fromcurrent": True, "transition": {"duration": 300,
-                                                                        "easing": "quadratic-in-out"}}],
-                    "label": "Play",
-                    "method": "animate"
-                },
-                {
-                    "args": [[None], {"frame": {"duration": 0, "redraw": False},
-                                    "mode": "immediate",
-                                    "transition": {"duration": 0}}],
-                    "label": "Pause",
-                    "method": "animate"
-                }
-            ],
-            "direction": "left",
-            "pad": {"r": 10, "t": 87},
-            "showactive": False,
-            "type": "buttons",
-            "x": 0.1,
-            "xanchor": "right",
-            "y": 0,
-            "yanchor": "top"
-        }
-    ]
+    x = e_radius * np.sin(theta)
+    y = e_radius * np.cos(theta)
 
-    sliders_dict = {
-        "active": 0,
-        "yanchor": "top",
-        "xanchor": "left",
-        "currentvalue": {
-            "font": {"size": 20},
-            "prefix": "Year:",
-            "visible": True,
-            "xanchor": "right"
-        },
-        "transition": {"duration": 300, "easing": "cubic-in-out"},
-        "pad": {"b": 10, "t": 50},
-        "len": 0.9,
-        "x": 0.1,
-        "y": 0,
-        "steps": []
-    }
+    xx = m_radius * np.sin(theta_2)
+    yy = m_radius * np.cos(theta_2)
 
-    # make data
-    year = 1952
-    for continent in continents:
-        dataset_by_year = dataset[dataset["year"] == year]
-        dataset_by_year_and_cont = dataset_by_year[
-            dataset_by_year["continent"] == continent]
+    fig, ax = plt.subplots(figsize=(5, 5))
+    ax = plt.axes(xlim=(-8, 8), ylim=(-8, 8))
+    earth, = ax.plot([], [], 'g.', markersize=15)
+    mars, = ax.plot([], [], 'r.', markersize=15)
+    ax.plot(0, 0, 'X', markersize=5, color="yellow")
+    plt.grid(True, lw=0.3)
+    ax.plot(x, y, 'g-')
+    ax.plot(xx, yy, 'r-')
 
-        data_dict = {
-            "x": list(dataset_by_year_and_cont["lifeExp"]),
-            "y": list(dataset_by_year_and_cont["gdpPercap"]),
-            "mode": "markers",
-            "text": list(dataset_by_year_and_cont["country"]),
-            "marker": {
-                "sizemode": "area",
-                "sizeref": 200000,
-                "size": list(dataset_by_year_and_cont["pop"])
-            },
-            "name": continent
-        }
-        fig_dict["data"].append(data_dict)
+    def animate(i):
+        earth.set_data(x[i], y[i])
+        mars.set_data(xx[i], yy[i])
+        return earth,mars
 
-    # make frames
-    for year in years:
-        frame = {"data": [], "name": str(year)}
-        for continent in continents:
-            dataset_by_year = dataset[dataset["year"] == int(year)]
-            dataset_by_year_and_cont = dataset_by_year[
-                dataset_by_year["continent"] == continent]
-
-            data_dict = {
-                "x": list(dataset_by_year_and_cont["lifeExp"]),
-                "y": list(dataset_by_year_and_cont["gdpPercap"]),
-                "mode": "markers",
-                "text": list(dataset_by_year_and_cont["country"]),
-                "marker": {
-                    "sizemode": "area",
-                    "sizeref": 200000,
-                    "size": list(dataset_by_year_and_cont["pop"])
-                },
-                "name": continent
-            }
-            frame["data"].append(data_dict)
-
-        fig_dict["frames"].append(frame)
-        slider_step = {"args": [
-            [year],
-            {"frame": {"duration": 300, "redraw": False},
-            "mode": "immediate",
-            "transition": {"duration": 300}}
-        ],
-            "label": year,
-            "method": "animate"}
-        sliders_dict["steps"].append(slider_step)
-
-
-    fig_dict["layout"]["sliders"] = [sliders_dict]
-
-    fig = go.Figure(fig_dict)
-
-    fig.show()
+    anim = FuncAnimation(fig, animate, frames=100, interval=200, repeat=False)
+    # anim.save('cirlce_ani.gif', writer='pillow')
+    plt.show()
