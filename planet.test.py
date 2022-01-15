@@ -40,10 +40,13 @@ total_orbiting_duration = datetime.timedelta(days=5)
 print(mercury.location_angle_earth(total_orbiting_duration))
 
 total_orbiting_duration = datetime.timedelta(days=20)
-print(pluto.location_angle_earth(total_orbiting_duration))
+calculate_time = pluto.last_op_earth + total_orbiting_duration
+print(pluto.location_angle_earth(calculate_time))
 
 total_orbiting_duration = datetime.timedelta(days=220)
-print(pluto.location_angle_earth(total_orbiting_duration))
+calculate_time = pluto.last_op_earth + total_orbiting_duration
+print(pluto.location_angle_earth(calculate_time))
 
 total_orbiting_duration = datetime.timedelta(days=-5)
-print(mercury.location_angle_earth(total_orbiting_duration))
+calculate_time = mercury.last_op_earth + total_orbiting_duration
+print(mercury.location_angle_earth(calculate_time))

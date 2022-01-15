@@ -5,8 +5,9 @@ import PySimpleGUI as sg
 import datetime
 
 from planet import Planet
+from planet_position import planet_positions
 from gui import create_main_layout, create_result_layout
-from calculator import calculate, calculate_with_earth
+from calculator import calculate
 from plot import Plot
 
 def open_result_page(dist_between,morat,next_opp,lat_list,date):    
@@ -28,6 +29,9 @@ def open_result_page(dist_between,morat,next_opp,lat_list,date):
         
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
+
+        if event == "-PLANET_POSITION-":
+            planet_positions() # give data
 
 def main():
     planets = {}
