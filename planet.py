@@ -41,7 +41,7 @@ class Planet:
         base_planet_angle = base_planet.location_angle_earth(calculation_time)
 
         # remaining angle in orbit before opposition
-        diff_angle = math.abs(orbit_planet_angle - base_planet_angle)
+        diff_angle = math.fabs(orbit_planet_angle - base_planet_angle)
         angular_displacement = diff_angle
         if orbit_planet_angle > base_planet_angle:
             angular_displacement = 2 * math.pi - diff_angle
