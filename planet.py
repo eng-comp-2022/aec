@@ -1,5 +1,6 @@
 import math
 from datetime import date, datetime, timedelta, timezone
+from scientific import seconds_in_day
 
 # Class Planet
 """
@@ -28,7 +29,8 @@ class Planet:
             total_orbiting_duration: total time it has been in orbit
         """
         # modular math to get position of the current period
-        current_orbit_duration = total_orbiting_duration % self.orbital_period
+        total_duration_days = total_orbiting_duration.total_seconds() / seconds_in_day
+        current_orbit_duration = total_duration_days % self.orbital_period
         percent_complete = current_orbit_duration / self.orbital_period
         return 2 * math.pi * percent_complete
 
@@ -40,6 +42,7 @@ class Planet:
             calculation_time is the time
         """
         total_orbiting_duration = calculation_time - self.last_op_earth
+        total_duration_days = total_orbiting_duration.total_seconds() / seconds_in_day
         current_orbit_duration = total_orbiting_duration % self.orbital_period
         return calculation_time + self.orbital_period - current_orbit_duration
 

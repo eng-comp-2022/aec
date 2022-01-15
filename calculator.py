@@ -5,7 +5,7 @@ from moritorium import is_moratorium
 from scientific import seconds_in_day
 
 
-def calculate(planet1: Planet, planet2: Planet, calculation_time=datetime.utcnow()):
+def calculate(planet1: Planet, planet2: Planet, calculation_time: datetime):
     # distance between
     angle_diff = planet1.abs_angle_diff(planet2, calculation_time)
     planet_displacement = planet1.distance(planet2, angle_diff)
