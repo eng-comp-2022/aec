@@ -53,11 +53,7 @@ def main():
             try:
                 date = datetime.datetime(int(values["-TIME_YEAR-"]), int(values["-TIME_MONTH-"]), int(values["-TIME_DAY-"])) # validate time
                 if (values["-PLANET_1-"] != values["-PLANET_2-"]):
-                    if "Earth" in {values["-PLANET_1-"], values["-PLANET_2-"]}:
-                        dist_between,morat,next_opp,lat_list = calculate(planets[values["-PLANET_1-"]], planets[values["-PLANET_2-"]])
-                    else:
-                        dist_between,morat,next_opp,lat_list = calculate_with_earth(planets[values["-PLANET_1-"]], planets[values["-PLANET_2-"]], planets["Earth"])
-
+                    dist_between,morat,next_opp,lat_list = calculate(planets[values["-PLANET_1-"]], planets[values["-PLANET_2-"]])
                     open_result_page(dist_between,morat,next_opp,lat_list,date)
                 else:
                     sg.popup_error(f'Please choose two distinct planets.')
