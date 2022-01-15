@@ -13,13 +13,12 @@ from calculator import calculate
 from plot import Plot
 
 def open_result_page(dist_between,morat,next_opp,date,planet1,planet2):    
-    example_plot = Plot(size=700)
+    example_plot = Plot(size=550)
     
     seconds = []
     dates = []
-    for i in range(0,47,1):
+    for i in range(48):
         seconds.append(communication_latency(planet1=planet1, planet2=planet2, calculation_time=date))
-        print(str(seconds) + " " + str(date))
         dates.append(date)
         date = date +relativedelta(months=+1)
     
@@ -29,7 +28,7 @@ def open_result_page(dist_between,morat,next_opp,date,planet1,planet2):
 
     example_plot.figure = go.Figure(data=go.Scatter(x=t, y=y, mode='lines+markers'))
 
-    result_window = sg.Window("Result Page", create_result_layout(example_plot.get_image(),dist_between,morat,next_opp,date))
+    result_window = sg.Window("Result Page", create_result_layout(example_plot.get_image(),dist_between,morat,next_opp,seconds,dates[0]))
 
     while True:  # Event Loop
         event, values = result_window.read(timeout=100)  # milliseconds
@@ -56,16 +55,17 @@ def main():
             break
         if event == "-ADD_PLANET-":
             try:
-                date = datetime.datetime(int(values["-LAST_YEAR-"]), int(values["-LAST_MONTH-"]), int(values["-LAST_DAY-"])) # validate time
+                date = datetime.datetime(int(values["-LAST_YEAR-"]), int(values["-LAST_MONTH-"]), int(values["-LAST_DAY-"]), int(values["-LAST_HOUR-"]), int(values["-LAST_MINUTE-"]), int(values["-LAST_SECOND-"])) # validate time
                 planet = Planet(values["-PLANET_NAME-"], float(values["-ORBITAL_RADIUS-"]), datetime.timedelta(days=float(values["-ORBITAL_PERIOD-"])), date)
                 planets[values["-PLANET_NAME-"]] = planet
                 window["-PLANET_1-"].update(values = [x for x in planets.keys()])
                 window["-PLANET_2-"].update(values = [x for x in planets.keys()])
             except Exception as e:
                 sg.popup_error(f'Invalid Input.')
+                print(e)
         if event == "-CALCULATE-": 
             try:
-                date = datetime.datetime(int(values["-TIME_YEAR-"]), int(values["-TIME_MONTH-"]), int(values["-TIME_DAY-"])) # validate time
+                date = datetime.datetime(int(values["-TIME_YEAR-"]), int(values["-TIME_MONTH-"]), int(values["-TIME_DAY-"]), int(values["-TIME_HOUR-"]), int(values["-TIME_MINUTE-"]), int(values["-TIME_SECOND-"])) # validate time
                 if (values["-PLANET_1-"] != values["-PLANET_2-"]):
                     dist_between,morat,next_opp = calculate(planets[values["-PLANET_1-"]], planets[values["-PLANET_2-"]], date)
                     open_result_page(dist_between,morat,next_opp,date,planets[values["-PLANET_1-"]],planets[values["-PLANET_2-"]])
