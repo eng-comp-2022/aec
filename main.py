@@ -1,5 +1,5 @@
 """
-Main script to start the TestMan-Engine application.
+Main script to start the application.
 """
 
 from controller import main
