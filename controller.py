@@ -4,22 +4,32 @@ import numpy as np
 import PySimpleGUI as sg
 import datetime
 
+from latency import communication_latency
+from dateutil.relativedelta import *
 from planet import Planet
 from planet_position import planet_positions
 from gui import create_main_layout, create_result_layout
 from calculator import calculate
 from plot import Plot
 
-def open_result_page(dist_between,morat,next_opp,lat_list,date):    
+def open_result_page(dist_between,morat,next_opp,date,planet1,planet2):    
     example_plot = Plot(size=700)
     
-    N = 1000
-    t = np.linspace(0, 10, 100)
-    y = np.sin(t)
+    seconds = []
+    dates = []
+    for i in range(0,47,1):
+        seconds.append(communication_latency(planet1=planet1, planet2=planet2, calculation_time=date))
+        print(str(seconds) + " " + str(date))
+        dates.append(date)
+        date = date +relativedelta(months=+1)
+    
+    N = 48
+    t = dates
+    y = seconds
 
-    example_plot.figure = go.Figure(data=go.Scatter(x=t, y=y, mode='markers'))
+    example_plot.figure = go.Figure(data=go.Scatter(x=t, y=y, mode='lines+markers'))
 
-    result_window = sg.Window("Result Page", create_result_layout(example_plot.get_image(),dist_between,morat,next_opp,lat_list,date))
+    result_window = sg.Window("Result Page", create_result_layout(example_plot.get_image(),dist_between,morat,next_opp,date))
 
     while True:  # Event Loop
         event, values = result_window.read(timeout=100)  # milliseconds
@@ -57,8 +67,8 @@ def main():
             try:
                 date = datetime.datetime(int(values["-TIME_YEAR-"]), int(values["-TIME_MONTH-"]), int(values["-TIME_DAY-"])) # validate time
                 if (values["-PLANET_1-"] != values["-PLANET_2-"]):
-                    dist_between,morat,next_opp,lat_list = calculate(planets[values["-PLANET_1-"]], planets[values["-PLANET_2-"]])
-                    open_result_page(dist_between,morat,next_opp,lat_list,date)
+                    dist_between,morat,next_opp = calculate(planets[values["-PLANET_1-"]], planets[values["-PLANET_2-"]], date)
+                    open_result_page(dist_between,morat,next_opp,date,planets[values["-PLANET_1-"]],planets[values["-PLANET_2-"]])
                 else:
                     sg.popup_error(f'Please choose two distinct planets.')
             except Exception as e:

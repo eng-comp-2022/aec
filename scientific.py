@@ -1,9 +1,13 @@
 import math
 from datetime import timedelta
 
+<<<<<<< HEAD
 # scientific constants
 
 light_speed = 299792458  # m/s
+=======
+light_speed = 0.299792458  # m/s
+>>>>>>> 4a101b376dad67bfcd3a703b7fe60cd3a196f0ce
 
 seconds_in_day = 86400
 
