@@ -74,6 +74,12 @@ def create_main_layout():
 
 
 def create_result_layout(image, dist_between,morat,next_opp,lat_list,date):
+    position_column = [
+        [
+            sg.Button("Planet Positions", size=(15, 1), key="-PLANET_POSITION-", font=("Helvetica", 20)),
+        ]
+    ]
+
     layout = [
         [
             sg.Text("Results", size=(width, 1), font=("Helvetica", 40))
@@ -95,6 +101,9 @@ def create_result_layout(image, dist_between,morat,next_opp,lat_list,date):
             sg.Text("Latency: " + str(lat_list[0]) + " seconds     ", font=("Helvetica", 20)),
             sg.Text("\t\t", font=("Helvetica", 20)),
             sg.Text("Date of Next Opposition: " + str(next_opp), font=("Helvetica", 20)),
+        ],
+        [
+            sg.Column(position_column, element_justification='right', expand_x=True)
         ],
 
     ]
