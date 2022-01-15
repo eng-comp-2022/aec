@@ -22,13 +22,14 @@ class Planet:
         self.orbital_period = orbital_period
         self.last_op_earth = last_op_earth
 
-    def location_angle_earth(self, total_orbiting_duration: timedelta):
+    def location_angle_earth(self, calculation_time: datetime):
         """
         returns angle in radians of planet with respect to "earth"
         param:
             total_orbiting_duration: total time it has been in orbit
         """
         # modular math to get position of the current period
+        total_orbiting_duration = calculation_time - self.last_op_earth
         total_duration_days = total_orbiting_duration.total_seconds() / seconds_in_day
         current_orbit_duration = total_duration_days % self.orbital_period
         percent_complete = current_orbit_duration / self.orbital_period
