@@ -17,8 +17,9 @@ class Planet:
         self.last_op_earth = last_op_earth
 
     # returns angle in radians of planet with respect to earth
-    def location_angle_earth(self, total_orbiting_duration: timedelta):
+    def location_angle_earth(self, calculate_time: datetime):
         """ballsack"""
+        total_orbiting_duration = calculate_time - self.last_op_earth
         current_orbit_duration = total_orbiting_duration % self.orbital_period
         percent_complete = current_orbit_duration / self.orbital_period
         return 2 * math.pi * percent_complete
@@ -36,12 +37,8 @@ class Planet:
             orbiting_planet = self
 
         # current angle of each planet
-        orbit_planet_angle = orbiting_planet.location_angle_earth(
-            calculation_time - orbiting_planet.last_op_earth
-        )
-        base_planet_angle = base_planet.location_angle_earth(
-            calculation_time - base_planet.last_op_earth
-        )
+        orbit_planet_angle = orbiting_planet.location_angle_earth(calculation_time)
+        base_planet_angle = base_planet.location_angle_earth(calculation_time)
 
         # remaining angle in orbit before opposition
         diff_angle = math.abs(orbit_planet_angle - base_planet_angle)
