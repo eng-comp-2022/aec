@@ -7,6 +7,7 @@ class Planet:
     """
     Represents a planet, and provides operations on it.
     """
+
     def __init__(
         self,
         name: str,
@@ -37,7 +38,7 @@ class Planet:
 
     # returns a datetime of the next opposition between the two planets
     def next_opposition_date(
-        self, other: "Planet", calculation_time:datetime
+        self, other: "Planet", calculation_time: datetime
     ) -> datetime:
         """
         With respect to the given calculation time, computes the next date at
@@ -60,10 +61,10 @@ class Planet:
         base_planet_angle = base_planet.location_angle_earth(calculation_time)
 
         # remaining angle in orbit to reach opposition; to reach the base planet
-        diff_angle = base_planet_angle - orbit_planet_angle
+        diff_angle = math.abs(base_planet_angle - orbit_planet_angle)
         angular_displacement = diff_angle
         if orbit_planet_angle > base_planet_angle:
-            angular_displacement = 2 * math.pi + diff_angle # diff_angle < 0
+            angular_displacement = 2 * math.pi - diff_angle
 
         # convert remaining angle to duration
         travel_duration_days = angular_displacement / orbit_w
