@@ -31,8 +31,9 @@ class Planet:
         # modular math to get position of the current period
         total_orbiting_duration = calculation_time - self.last_op_earth
         total_duration_days = total_orbiting_duration.total_seconds() / seconds_in_day
-        current_orbit_duration = total_duration_days % self.orbital_period
-        percent_complete = current_orbit_duration / self.orbital_period
+        orbital_period_days = self.orbital_period.total_seconds() / seconds_in_day
+        current_orbit_duration = total_duration_days % orbital_period_days
+        percent_complete = current_orbit_duration / orbital_period_days
         return 2 * math.pi * percent_complete
 
     # returns a datetime of the next opposition between the two planets
