@@ -1,13 +1,13 @@
-import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import numpy as np
 import pandas as pd
 
+
 def planet_positions():
     # from matplotlib.animation import PillowWriter
 
-    plt.style.use('dark_background')
+    plt.style.use("dark_background")
 
     n_points = 100
     theta = np.linspace(0, 2 * np.pi, n_points)
@@ -23,17 +23,17 @@ def planet_positions():
 
     fig, ax = plt.subplots(figsize=(5, 5))
     ax = plt.axes(xlim=(-8, 8), ylim=(-8, 8))
-    earth, = ax.plot([], [], 'g.', markersize=15)
-    mars, = ax.plot([], [], 'r.', markersize=15)
-    ax.plot(0, 0, 'X', markersize=5, color="yellow")
+    (earth,) = ax.plot([], [], "g.", markersize=15)
+    (mars,) = ax.plot([], [], "r.", markersize=15)
+    ax.plot(0, 0, "X", markersize=5, color="yellow")
     plt.grid(True, lw=0.3)
-    ax.plot(x, y, 'g-')
-    ax.plot(xx, yy, 'r-')
+    ax.plot(x, y, "g-")
+    ax.plot(xx, yy, "r-")
 
     def animate(i):
         earth.set_data(x[i], y[i])
         mars.set_data(xx[i], yy[i])
-        return earth,mars
+        return earth, mars
 
     anim = FuncAnimation(fig, animate, frames=100, interval=200, repeat=False)
     # anim.save('cirlce_ani.gif', writer='pillow')
