@@ -24,7 +24,13 @@ class Planet:
         percent_complete = current_orbit_duration / self.orbital_period
         return 2 * math.pi * percent_complete
 
-    def next_opposition_date(self, other, calculation_time=datetime.now(timezone.utc)):
+    def abs_angle_diff(self, other, calculation_time: datetime):
+        planet1_angle = self.location_angle_earth(calculation_time)
+        planet2_angle = other.location_angle_earth(calculation_time)
+        angle_diff = math.fabs(planet1_angle - planet2_angle)
+        return angle_diff
+
+    def next_opposition_date(self, other, calculation_time: datetime):
         planet1_w = angular_velocity(self)
         planet2_w = angular_velocity(other)
         orbit_w = abs(planet1_w - planet2_w)
