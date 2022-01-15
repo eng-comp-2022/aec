@@ -12,5 +12,5 @@ def communication_latency(
     calculated at the given calculation time.
     """
     angle_diff = planet1.abs_angle_diff(planet2, calculation_time)
-    planet_displacement = planet1.displacement(planet2, angle_diff)
-    return travel_duration(planet_displacement, light_speed)
+    planet_distance = planet1.distance(planet2, angle_diff)
+    return travel_duration(planet_distance, light_speed)
