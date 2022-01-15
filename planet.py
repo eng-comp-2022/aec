@@ -38,8 +38,8 @@ class Planet:
 
     # returns a datetime of the next opposition between the two planets
     def next_opposition_date(self, other, calculation_time=datetime.now(timezone.utc)):
-        planet1_w = angular_velocity(self)
-        planet2_w = angular_velocity(other)
+        planet1_w = angular_velocity(self.orbital_period)
+        planet2_w = angular_velocity(other.orbital_period)
         orbit_w = abs(planet1_w - planet2_w)
 
         # faster planet orbits at relative angular velocity wrt base planet
