@@ -2,8 +2,6 @@ import math
 from datetime import datetime, timedelta, timezone
 from scientific import angular_velocity, duration_in_days
 
-# Class Planet
-
 
 class Planet:
     """
