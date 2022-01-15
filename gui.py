@@ -101,7 +101,7 @@ def create_result_layout(image, dist_between,morat,next_opp,seconds,date):
             sg.Text("Results", size=(width, 1), font=("Helvetica", 40))
         ],
         [
-            sg.Text("Time vs. Latency over the next 48 months", size=(width, 1), font=("Helvetica", 25))
+            sg.Text("Time vs. Latency over the next 48 months", size=(36, 1), font=("Helvetica", 25))
         ],
         [
             sg.Image(key="-IMAGE-", data=image)

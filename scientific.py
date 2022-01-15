@@ -3,7 +3,7 @@ from datetime import timedelta
 
 # scientific constants
 
-light_speed = 299792458  # m/s
+light_speed = 0.299792458  # Mkm/s
 
 seconds_in_day = 86400
 
