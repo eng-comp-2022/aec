@@ -21,25 +21,24 @@ class Planet:
         self.orbital_period = orbital_period
         self.last_op_earth = last_op_earth
 
-    """
-    returns angle in radians of planet with respect to "earth"
-    param:
-        total_orbiting_duration: total time it has been in orbit
-    """
-
     def location_angle_earth(self, total_orbiting_duration: timedelta):
+        """
+        returns angle in radians of planet with respect to "earth"
+        param:
+            total_orbiting_duration: total time it has been in orbit
+        """
         # modular math to get position of the current period
         current_orbit_duration = total_orbiting_duration % self.orbital_period
         percent_complete = current_orbit_duration / self.orbital_period
         return 2 * math.pi * percent_complete
 
-    """
-    return the next date when the planets are next oppositions
-    param:
-        calculation_time is the time
-    """
     # returns a datetime of the next opposition between the two planets
     def next_opposition_date(self, calculation_time=datetime.now(timezone.utc)):
+        """
+        return the next date when the planets are next oppositions
+        param:
+            calculation_time is the time
+        """
         total_orbiting_duration = calculation_time - self.last_op_earth
         current_orbit_duration = total_orbiting_duration % self.orbital_period
         return calculation_time + self.orbital_period - current_orbit_duration
